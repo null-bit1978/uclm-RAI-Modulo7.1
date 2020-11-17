@@ -1,6 +1,7 @@
 import requests
 import re
 import sys
+from termcolor import colored
 
 if len(sys.argv) == 1:
     print("Usage: python3 scraper.py <url>")
@@ -21,7 +22,7 @@ def find_form(url):
     if match:
         return match.group(0)
     else:
-        return -1
+        return None
 
 def find_links(url):
     pattern = re.compile(r'href="(https?:\/\/[\w.\/?=,&-]+)')
@@ -29,11 +30,14 @@ def find_links(url):
     return matches
 
 form = find_form(page)
-print(form)
+if form:
+	print(form)
+else:
+	print(colored("No form found on this page", "red"))
 
 links = find_links(page)
 for link in links:
-    print(link)
+    print(colored(link, "green"))
 
 
 
