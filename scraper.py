@@ -14,10 +14,12 @@ if status != 200:
     print(f"Connection returned the status {status}, try with a different url.")
     sys.exit(1)
 
+#compilamos la página para trabajar sobre ella
 page = requests.get(url).text
 
+#aquí va toda la funcionalidad del script
 def find_form(url):
-    pattern = re.compile(r"<form (\w|\W)+<\/form>")
+    pattern = re.compile(r"<form (\w|\W)+<\/form>") #utilizamos este patrón en búsqueda del formulario. Definido a base de prueba y error, así que desconocemos su grado de universalidad
     match = pattern.search(url)
     if match:
         return match.group(0)
@@ -25,7 +27,7 @@ def find_form(url):
         return None
 
 def find_links(url):
-    pattern = re.compile(r'href="(https?:\/\/[\w.\/?=,&-]+)')
+    pattern = re.compile(r'href="(https?:\/\/[\w.\/?=,&-]+)') # este patrón también se ha definido a base de prueba y error.
     matches = re.findall(pattern, page)
     return matches
 
